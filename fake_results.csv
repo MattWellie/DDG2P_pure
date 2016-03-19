@@ -1,0 +1,7 @@
+Label,Chromosome,Start,Stop,Copy number,Type,Sample
+Intragenic,3,58013443,58099356,3,Duplication,Intragenic1
+Intragenic,X,31829434,32760381,3,Duplication,Intragenic2
+Intragenic,1,156057698,156089774,3,Duplication,Intragenic3
+Exonic,6,88239333,88770769,3,Duplication,Exonic1
+5-prime,6,101753257,102172031,3,Duplication,5-prime1
+3-prime,6,102293296,102712070,3,Duplication,3-prime1

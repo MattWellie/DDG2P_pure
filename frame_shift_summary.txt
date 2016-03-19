@@ -1,0 +1,96 @@
+
+Sample number: Intragenic1
+
+CNV: 3:58013443-58099356
+Chromosome 3, Gene FLNB
+	NM_001164317	No overlap for this transcript
+	NM_001457	No overlap for this transcript
+	NM_001164318	No overlap for this transcript
+	NM_001164319	No overlap for this transcript
+
+Sample number: Intragenic2
+
+CNV: X:31829434-32760381
+Chromosome X, Gene DMD
+	If this patient is Male:
+		NM_004021	No Frameshift
+		NM_004020	No Frameshift
+		NM_004023	No Frameshift
+		NM_004022	No Frameshift
+		NM_004006	No overlap for this transcript
+		NM_004009	No overlap for this transcript
+		NM_004018	No overlap for this transcript
+		NM_004019	No overlap for this transcript
+		NM_000109	No overlap for this transcript
+		NM_004010	No overlap for this transcript
+		NM_004011	No Frameshift
+		NM_004012	2-base frameshift
+		NM_004013	No Frameshift
+		NM_004014	No overlap for this transcript
+		NM_004015	No overlap for this transcript
+		NM_004016	No overlap for this transcript
+		NM_004017	No overlap for this transcript
+
+	If this patient is Female:
+		NM_004021	No Frameshift
+		NM_004020	No Frameshift
+		NM_004023	No Frameshift
+		NM_004022	No Frameshift
+		NM_004006	No overlap for this transcript
+		NM_004009	No overlap for this transcript
+		NM_004018	No overlap for this transcript
+		NM_004019	No overlap for this transcript
+		NM_000109	No overlap for this transcript
+		NM_004010	No overlap for this transcript
+		NM_004011	No Frameshift
+		NM_004012	2-base frameshift
+		NM_004013	No Frameshift
+		NM_004014	No overlap for this transcript
+		NM_004015	No overlap for this transcript
+		NM_004016	No overlap for this transcript
+		NM_004017	No overlap for this transcript
+
+Sample number: Intragenic3
+
+CNV: 1:156057698-156089774
+Chromosome 1, Gene LMNA
+	NM_001282624	No overlap for this transcript
+	NM_005572	1-base frameshift due to 5' CNV
+		Significant confidence CNV is intronic
+	NM_001257374	No overlap for this transcript
+	NM_170708	1-base frameshift due to 5' CNV
+		Significant confidence CNV is intronic
+	NM_001282626	1-base frameshift due to 5' CNV
+		Significant confidence CNV is intronic
+	NM_001282625	No overlap for this transcript
+	NM_170707	1-base frameshift due to 5' CNV
+		Significant confidence CNV is intronic
+
+Sample number: Exonic1
+
+CNV: 6:88239333-88770769
+Chromosome 6, Gene RARS2
+	NM_020320	CNV end point is exonic, Frameshift not calculated
+	NM_001318785	CNV end point is exonic, Frameshift not calculated
+
+Sample number: 5-prime1
+
+CNV: 6:101753257-102172031
+Chromosome 6, Gene GRIK2
+	NM_001166247	2-base frameshift due to 5' CNV
+		Significant confidence CNV is intronic
+	NM_021956	2-base frameshift due to 5' CNV
+		Significant confidence CNV is intronic
+	NM_175768	2-base frameshift due to 5' CNV
+		Significant confidence CNV is intronic
+
+Sample number: 3-prime1
+
+CNV: 6:102293296-102712070
+Chromosome 6, Gene GRIK2
+	NM_001166247	1-base frameshift due to 3' CNV
+		Significant confidence CNV is intronic
+	NM_021956	2-base frameshift due to 3' CNV
+		Significant confidence CNV is intronic
+	NM_175768	1-base frameshift due to 3' CNV
+		Significant confidence CNV is intronic

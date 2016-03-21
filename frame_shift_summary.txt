@@ -52,7 +52,7 @@ Chromosome 1, Gene LMNA
 	NM_170707	2-base frameshift due to 5' CNV
 		No probes in this intronic region
 
-Sample number: LMNA_intra_no_conf_no_FS
+Sample number: LMNA_intra_no_conf_1_base_FS
 
 CNV: 1:156100246-156100840
 Chromosome 1, Gene LMNA
@@ -78,7 +78,7 @@ Chromosome 1, Gene LMNA
 		Multiple intronic probes, but all are under CNV
 		Only one intronic probe at CNV end
 
-Sample number: LMNA_intra_high_conf_no_FS
+Sample number: LMNA_intra_high_conf_1_base_FS
 
 CNV: 1:156099129-156105476
 Chromosome 1, Gene LMNA

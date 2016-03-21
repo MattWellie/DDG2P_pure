@@ -137,6 +137,8 @@ with open(hi_in, 'r') as handle:
                 output_dictionary[chromosome][gene_symbol]['hi_score'] = hi_score
                 output_dictionary[chromosome][gene_symbol]['hs_score'] = hs_score
 
+print 'Exons covered: {}'.format(output_dictionary.keys())
+
 # 2 separate writes, some binary conflict issues on reading files in Mac OSX
 with open(ddg2p_with_exons_binary, 'wb') as handle:
     cPickle.dump(output_dictionary, handle)

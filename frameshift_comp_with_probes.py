@@ -237,11 +237,26 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
         exonic_end = False
         gap_found = False
         confidence = []
+        last_end = gene_dict[transcript]['exons'][1]['stop']
+
+
+        """
+        # DEBUG for exon lengths
+        for exon in exon_list:
+            exon_start = gene_dict[transcript]['exons'][exon]['start']
+            exon_stop = gene_dict[transcript]['exons'][exon]['stop']
+
+            print 'Exon start: {}'.format(exon_start)
+            print 'Exon stop: {}'.format(exon_stop)
+            print 'Direct_length: {}'.format(exon_stop - exon_start)
+            print 'Added_length: {}'.format((exon_stop - exon_start)-1)
+            this = raw_input('Continue...')
+        """
+
         if (gene_start < start) and (gene_stop > start and gene_stop < stop):
             # 3' end, exons overlapping start
             cnv_type = "3'"
             # Situation; gene starts outside CNV boundary
-            last_end = gene_dict[transcript]['exons'][1]['stop']
             for exon in exon_list:
                 # Get details from the exon entry
                 exon_start = gene_dict[transcript]['exons'][exon]['start']
@@ -260,12 +275,15 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
                 elif start <= exon_start:
                     any_overlap = True
                     exons_affected.append(str(exon))
-                    bases_affected += (exon_stop - exon_start)-1
+                    bases_affected += (exon_stop - exon_start)
+
                     if not gap_found:
                         gap_found = True
-                        gap_start = last_end
-                        gap_end = exon_start
                         # Do something to find probes in this region
+                        print 'Confidence values!:\nlast_end: {}\nexon_start: {}\nstart: {}\nstop: {}'.format(
+                            last_end, exon_start, start, stop
+                        )
+                        this = raw_input('continue...')
                         confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, False)) 
                 else:
                     # Moves the 'end of last exon marker' along 
@@ -275,10 +293,7 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
             # 5' end, exons overlapping stop
             cnv_type = "5'"
             # Situation; gene will start within CNV region
-            
-            # Set initial value for the gap point
-            last_end = gene_dict[transcript]['exons'][1]['stop']
-            
+
             for exon in exon_list:
                 exon_start = gene_dict[transcript]['exons'][exon]['start']
                 exon_stop = gene_dict[transcript]['exons'][exon]['stop']
@@ -294,12 +309,17 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
                 elif stop >= exon_stop:
                     any_overlap = True
                     exons_affected.append(str(exon))
-                    bases_affected += (exon_stop - exon_start)-1
+                    bases_affected += (exon_stop - exon_start)
+                    last_end = exon_stop
                     
                 else:
                     if not gap_found:
                         gap_found = True
-                        # Do something to find probes in this region
+                        # find probes in this region
+                        print 'Confidence values!:\nlast_end: {}\nexon_start: {}\nstart: {}\nstop: {}'.format(
+                            last_end, exon_start, start, stop
+                        )
+                        this = raw_input('continue...')
                         confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, True)) 
 
         elif (gene_start > start) and (gene_stop < stop):
@@ -310,9 +330,6 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
             # Initialise Boolean values
             outside = True
             inside = False
-            
-            # Set initial value for the gap point
-            last_end = gene_dict[transcript]['exons'][1]['stop']
             
             for exon in exon_list:
                 exon_start = gene_dict[transcript]['exons'][exon]['start']
@@ -336,8 +353,12 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
                         outside = False
                         inside = True
                         exons_affected.append(str(exon))
-                        bases_affected += (exon_stop - exon_start)-1
+                        bases_affected += (exon_stop - exon_start)
                         # Do the calculation of probe confidence here
+                        print 'Confidence values!:\nlast_end: {}\nexon_start: {}\nstart: {}\nstop: {}'.format(
+                            last_end, exon_start, start, stop
+                        )
+                        this = raw_input('continue...')
                         confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, False)) 
                         last_end = exon_stop
                     else:
@@ -347,11 +368,15 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
                     if stop > exon_stop:
                         any_overlap = True
                         exons_affected.append(str(exon))
-                        bases_affected += (exon_stop - exon_start)-1
+                        bases_affected += (exon_stop - exon_start)
                         last_end = exon_stop
                     elif stop < exon_start:
                         inside = False
-                        # Do the calculation of probe confidence here   
+                        # Do the calculation of probe confidence here
+                        print 'Confidence values!:\nlast_end: {}\nexon_start: {}\nstart: {}\nstop: {}'.format(
+                            last_end, exon_start, start, stop
+                        )
+                        this = raw_input('continue...')
                         confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, True))                      
                     else:
                         print "Shouldn't reach this condition!"

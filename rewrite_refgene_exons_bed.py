@@ -69,8 +69,8 @@ with open(output_file, 'wb') as handle:
 
             transcripts.add(transcript)
             if exon_num == 1:
-                starts = row['exonStarts'][:-1]
-                ends = row['exonEnds'][:-1]
+                starts =[ row['exonStarts'][:-1]]
+                ends = [row['exonEnds'][:-1]]
             else:
                 try:
                     starts = row['exonStarts'][:-1].split(',')

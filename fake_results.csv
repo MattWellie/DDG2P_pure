@@ -2,3 +2,6 @@ Label,Chromosome,Start,Stop,Copy number,Type,Sample
 5-prime_LMNA_ex1,1,156083637,156090851,3,5',LMNA_ex_1_2-baseFS
 5-prime_LMNA_ex1&2,1,156083637,156103538,3,5',LMNA_ex_1&2_NoFS
 5-prime_LMNA_ex1-6,1,156083637,156105929,3,5',LMNA_ex_1-6_2-baseFS
+intra-noconf_LMNA,1,156100246,156100840,3,duplication,LMNA_intra_no_conf_no_FS
+intra-conf_LMNA,1,156099129,156105476,3,duplication,LMNA_intra_high_conf_no_FS
+intra-2_LMNA,1,156103998,156105214,3,duplication,LMNA_3_exons_noFS

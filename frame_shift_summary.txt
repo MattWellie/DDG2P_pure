@@ -1,3 +1,4 @@
+The frameshift analysis of the contents of file "fake_results.csv"
 
 Sample number: LMNA_ex_1_2-baseFS
 
@@ -11,7 +12,9 @@ Chromosome 1, Gene LMNA
 		Significant confidence CNV is intronic
 	NM_001282626	2-base frameshift due to 5' CNV
 		Significant confidence CNV is intronic
-	NM_001282625	No overlap for this transcript
+	NM_001282625	1-base frameshift
+		Significant confidence CNV is intronic
+		Significant confidence CNV is intronic
 	NM_170707	2-base frameshift due to 5' CNV
 		Significant confidence CNV is intronic
 
@@ -24,7 +27,9 @@ Chromosome 1, Gene LMNA
 	NM_001257374	No Frameshift
 	NM_170708	No Frameshift
 	NM_001282626	No Frameshift
-	NM_001282625	No overlap for this transcript
+	NM_001282625	2-base frameshift
+		Significant confidence CNV is intronic
+		Only one intronic probe at CNV end
 	NM_170707	No Frameshift
 
 Sample number: LMNA_ex_1-6_2-baseFS
@@ -41,6 +46,72 @@ Chromosome 1, Gene LMNA
 		No probes in this intronic region
 	NM_001282626	2-base frameshift due to 5' CNV
 		No probes in this intronic region
-	NM_001282625	No overlap for this transcript
+	NM_001282625	1-base frameshift
+		Significant confidence CNV is intronic
+		No probes in this intronic region
 	NM_170707	2-base frameshift due to 5' CNV
 		No probes in this intronic region
+
+Sample number: LMNA_intra_no_conf_no_FS
+
+CNV: 1:156100246-156100840
+Chromosome 1, Gene LMNA
+	NM_001282624	1-base frameshift
+		Multiple intronic probes, but all are under CNV
+		Only one intronic probe at CNV end
+	NM_005572	1-base frameshift
+		Multiple intronic probes, but all are under CNV
+		Only one intronic probe at CNV end
+	NM_001257374	1-base frameshift
+		Multiple intronic probes, but all are under CNV
+		Only one intronic probe at CNV end
+	NM_170708	1-base frameshift
+		Multiple intronic probes, but all are under CNV
+		Only one intronic probe at CNV end
+	NM_001282626	1-base frameshift
+		Multiple intronic probes, but all are under CNV
+		Only one intronic probe at CNV end
+	NM_001282625	1-base frameshift
+		Multiple intronic probes, but all are under CNV
+		Only one intronic probe at CNV end
+	NM_170707	1-base frameshift
+		Multiple intronic probes, but all are under CNV
+		Only one intronic probe at CNV end
+
+Sample number: LMNA_intra_high_conf_no_FS
+
+CNV: 1:156099129-156105476
+Chromosome 1, Gene LMNA
+	NM_001282624	1-base frameshift
+		Significant confidence CNV is intronic
+		Significant confidence CNV is intronic
+	NM_005572	1-base frameshift
+		Significant confidence CNV is intronic
+		Significant confidence CNV is intronic
+	NM_001257374	1-base frameshift
+		Significant confidence CNV is intronic
+		Significant confidence CNV is intronic
+	NM_170708	1-base frameshift
+		Significant confidence CNV is intronic
+		Significant confidence CNV is intronic
+	NM_001282626	1-base frameshift
+		Significant confidence CNV is intronic
+		Significant confidence CNV is intronic
+	NM_001282625	1-base frameshift
+		Significant confidence CNV is intronic
+		Significant confidence CNV is intronic
+	NM_170707	1-base frameshift
+		Significant confidence CNV is intronic
+		Significant confidence CNV is intronic
+
+Sample number: LMNA_3_exons_noFS
+
+CNV: 1:156103998-156105214
+Chromosome 1, Gene LMNA
+	NM_001282624	No Frameshift
+	NM_005572	No Frameshift
+	NM_001257374	No Frameshift
+	NM_170708	No Frameshift
+	NM_001282626	No Frameshift
+	NM_001282625	No Frameshift
+	NM_170707	No Frameshift

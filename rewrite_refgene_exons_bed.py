@@ -114,7 +114,7 @@ with open(output_file, 'wb') as handle:
                     # Add details from the annotations dictionary where available
                     # Should be available for all of them, as they are DDG2P
                     if gene in ddg2p_dict[chromosome]:
-                        output_dictionary[chromosome][gene][transcript]['disease'] = \
+                        output_dictionary[chromosome][gene]['disease'] = \
                             ddg2p_dict[chromosome][gene]['diseases']
 
                 # Add the exon coordinates under an appropriate index

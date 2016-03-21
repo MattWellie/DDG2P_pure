@@ -47,7 +47,7 @@ def process_fs_dictionary(fs_dict, copies, gene, chrom):
     The results of this process will be that the output files is written to with summary details
     Depending on opinion, this may be more appropriate as an excel document
     """
-    transcripts = fs_dict[gene].keys()
+    transcripts = fs_dict.keys()
     output_strings = []
     # Start with X chromosome instances, which will have results conditional on gender  
     # Conditional only applies where the CNV is intragenic
@@ -58,23 +58,23 @@ def process_fs_dictionary(fs_dict, copies, gene, chrom):
         output_strings.append('\tIf this patient is Male:\n')
         for transcript in transcripts:
             # If the CNV had an intronic end:
-            if 'fail' in fs_dict[gene][transcript].keys():
+            if 'fail' in fs_dict[transcript].keys():
                 # Print fail statement and move on
-                output_strings.append('\t\t{}\t{}\n'.format(transcript, fs_dict[gene][transcript]['fail']))
-            elif fs_dict[gene][transcript]['fs']:
+                output_strings.append('\t\t{}\t{}\n'.format(transcript, fs_dict[transcript]['fail']))
+            elif fs_dict[transcript]['fs']:
                 # Special set of conditions based on intragenic CNVs
-                if fs_dict[gene][transcript]['type'] == 'intragenic':
+                if fs_dict[transcript]['type'] == 'intragenic':
                     # Assume baseline is one X chrom
                     if (copies - 1) % 3 != 0:
                         # Use pre-calculated 'fs' value (True/False)
-                        if fs_dict[gene][transcript]['fs']:
+                        if fs_dict[transcript]['fs']:
                             output_strings.append('\t\t{}\t{}-base frameshift\n'.format(transcript, fs_dict[gene][transcript]['frame change']))
                             # Intragenic will have two different 'confidence' reports
-                            if fs_dict[gene][transcript]['confidence'] == 2:
-                                output_strings.append("\t\t\t3' End: \t{}\n".format(fs_dict[gene][transcript]['confidence'][0]))
-                                output_strings.append("\t\t\t5' End: \t{}\n".format(fs_dict[gene][transcript]['confidence'][1]))
+                            if fs_dict[transcript]['confidence'] == 2:
+                                output_strings.append("\t\t\t3' End: \t{}\n".format(fs_dict[transcript]['confidence'][0]))
+                                output_strings.append("\t\t\t5' End: \t{}\n".format(fs_dict[transcript]['confidence'][1]))
                             else:
-                                for x in fs_dict[gene][transcript]['confidence']:
+                                for x in fs_dict[transcript]['confidence']:
                                     output_strings.append("\t\t\t{}\n".format(x))
                         else:
                             output_strings.append('\t\t{}\tNo frameshift\n'.format(transcript))
@@ -83,7 +83,7 @@ def process_fs_dictionary(fs_dict, copies, gene, chrom):
                     else:
                         output_strings.append('\t\t{}\tNo frameshift\n'.format(transcript))
                 else:
-                    output_strings.append('\t\t{}\t{}-base frameshift\n'.format(transcript, fs_dict[gene][transcript]['frame change']))
+                    output_strings.append('\t\t{}\t{}-base frameshift\n'.format(transcript, fs_dict[transcript]['frame change']))
             else:
                 output_strings.append('\t\t{}\tNo Frameshift\n'.format(transcript))
                             
@@ -91,32 +91,32 @@ def process_fs_dictionary(fs_dict, copies, gene, chrom):
         #if female and not a 3x increase
         for transcript in transcripts:
             # If the CNV had an intronic end:
-            if 'fail' in fs_dict[gene][transcript].keys():
+            if 'fail' in fs_dict[transcript].keys():
                 # Print fail statement and move on
-                output_strings.append('\t\t{}\t{}\n'.format(transcript, fs_dict[gene][transcript]['fail']))
-            elif fs_dict[gene][transcript]['fs']:
+                output_strings.append('\t\t{}\t{}\n'.format(transcript, fs_dict[transcript]['fail']))
+            elif fs_dict[transcript]['fs']:
                 # Special set of conditions based on intragenic CNVs
-                if fs_dict[gene][transcript]['type'] == 'intragenic':
+                if fs_dict[transcript]['type'] == 'intragenic':
                     # Assume baseline is one X chrom
                     if (copies - 2) % 3 != 0:
-                        if fs_dict[gene][transcript]['fs']:
-                            output_strings.append('\t\t{}\t{}-base frameshift\n'.format(transcript, fs_dict[gene][transcript]['frame change']))
+                        if fs_dict[transcript]['fs']:
+                            output_strings.append('\t\t{}\t{}-base frameshift\n'.format(transcript, fs_dict[transcript]['frame change']))
                             # Intragenic will have two different 'confidence' reports
-                            if fs_dict[gene][transcript]['confidence'] == 2:
-                                output_strings.append("\t\t3' End{}\n".format(fs_dict[gene][transcript]['confidence'][0]))
-                                output_strings.append("\t\t5' End{}\n".format(fs_dict[gene][transcript]['confidence'][1]))
+                            if fs_dict[transcript]['confidence'] == 2:
+                                output_strings.append("\t\t3' End{}\n".format(fs_dict[transcript]['confidence'][0]))
+                                output_strings.append("\t\t5' End{}\n".format(fs_dict[transcript]['confidence'][1]))
                             else:
-                                for x in fs_dict[gene][transcript]['confidence']:
+                                for x in fs_dict[transcript]['confidence']:
                                     output_strings.append("\t\t{}\n".format(x))
                         else:
                             output_strings.append('\t\tTranscript: {} - No frameshift\n'.format(transcript))
                     else:
-                        if fs_dict[gene][transcript]['fs']:
-                            output_strings.append('\t\t{}\t{}-base frameshift\n'.format(transcript, fs_dict[gene][transcript]['frame change']))
+                        if fs_dict[transcript]['fs']:
+                            output_strings.append('\t\t{}\t{}-base frameshift\n'.format(transcript, fs_dict[transcript]['frame change']))
                         else:
                             output_strings.append('\t\tTranscript: {} - No frameshift\n'.format(transcript))
                 else:
-                    output_strings.append('\t\t{}\t{}-base frameshift\n'.format(transcript, fs_dict[gene][transcript]['frame change']))
+                    output_strings.append('\t\t{}\t{}-base frameshift\n'.format(transcript, fs_dict[transcript]['frame change']))
             else:
                 output_strings.append('\t\t{}\tNo Frameshift\n'.format(transcript))
     # Work on Y c'some separately
@@ -124,38 +124,38 @@ def process_fs_dictionary(fs_dict, copies, gene, chrom):
         # For each transcript
         for transcript in transcripts:
             # If the CNV had an intronic end:
-            if 'fail' in fs_dict[gene][transcript].keys():
+            if 'fail' in fs_dict[transcript].keys():
                 # Print fail statement and move on
-                output_strings.append('\t{}\t{}\n'.format(transcript, fs_dict[gene][transcript]['fail']))
-            elif fs_dict[gene][transcript]['fs']:
+                output_strings.append('\t{}\t{}\n'.format(transcript, fs_dict[transcript]['fail']))
+            elif fs_dict[transcript]['fs']:
                 # identify intragenic situations
-                if fs_dict[gene][transcript]['type'] == 'intragenic':
+                if fs_dict[transcript]['type'] == 'intragenic':
                     # Rule out frameshift using copy number
                     if (copies - 1) % 3 == 0:
                         output_strings.append('\t{}\tIntragenic, no frameshift\n'.format(transcript))
                     else:
-                        if fs_dict[gene][transcript]['fs']:
+                        if fs_dict[transcript]['fs']:
                             output_strings.append('\t{}\t{}-base frameshift cause by intragenic CNV\n'.format(transcript,
-                                                                                        fs_dict[gene][transcript]['frame change']))
+                                                                                        fs_dict[transcript]['frame change']))
                             # Intragenic will have two different 'confidence' reports
-                            if fs_dict[gene][transcript]['confidence'] == 2:
-                                output_strings.append("\t\t3' End: {}\n".format(fs_dict[gene][transcript]['confidence'][0]))
-                                output_strings.append("\t\t5' End: {}\n".format(fs_dict[gene][transcript]['confidence'][1]))
+                            if fs_dict[transcript]['confidence'] == 2:
+                                output_strings.append("\t\t3' End: {}\n".format(fs_dict[transcript]['confidence'][0]))
+                                output_strings.append("\t\t5' End: {}\n".format(fs_dict[transcript]['confidence'][1]))
                             else:
-                                for x in fs_dict[gene][transcript]['confidence']:
+                                for x in fs_dict[transcript]['confidence']:
                                     output_strings.append("\t{}\n".format(x))
                         else:
                             output_strings.append('\t{}\tIntragenic, no frameshift\n'.format(transcript))
                 # All other types of frameshift
                 else:
                     if (copies - 1) % 3 == 0:
-                        output_strings.append('\t{}\t{} CNV, no frameshift\n'.format(transcript, fs_dict[gene][transcript]['type']))
+                        output_strings.append('\t{}\t{} CNV, no frameshift\n'.format(transcript, fs_dict[transcript]['type']))
                     # Actual frameshifts
                     else:
                         output_strings.append('\t\t{}\t{}-base frameshift due to {} CNV\n'.format(transcript,
-                                                                                                  fs_dict[gene][transcript]['frame change'],
-                                                                                                  fs_dict[gene][transcript]['type']))
-                        output_strings.append("\t\t\t{}\n".format(fs_dict[gene][transcript]['confidence'][0]))
+                                                                                                  fs_dict[transcript]['frame change'],
+                                                                                                  fs_dict[transcript]['type']))
+                        output_strings.append("\t\t\t{}\n".format(fs_dict[transcript]['confidence'][0]))
             else:
                 output_strings.append('\t{}\tNo Frameshift\n'.format(transcript))
 
@@ -164,42 +164,42 @@ def process_fs_dictionary(fs_dict, copies, gene, chrom):
         # For each transcript
         for transcript in transcripts:
             # If the CNV had an intronic end:
-            if 'fail' in fs_dict[gene][transcript].keys():
+            if 'fail' in fs_dict[transcript].keys():
                 # Print fail statement and move on
-                output_strings.append('\t{}\t{}\n'.format(transcript, fs_dict[gene][transcript]['fail']))
-            elif fs_dict[gene][transcript]['fs']:
+                output_strings.append('\t{}\t{}\n'.format(transcript, fs_dict[transcript]['fail']))
+            elif fs_dict[transcript]['fs']:
                 # identify intragenic situations
-                if fs_dict[gene][transcript]['type'] == 'intragenic':
+                if fs_dict[transcript]['type'] == 'intragenic':
                     # Rule out frameshift using copy number
                     if (copies - 2) % 3 == 0:
                         output_strings.append('\t{}\tIntragenic, no frameshift\n'.format(transcript))
                     else:
-                        if fs_dict[gene][transcript]['fs']:
-                            output_strings.append('\t{}\t{}-base frameshift\n'.format(transcript, fs_dict[gene][transcript]['frame change']))
+                        if fs_dict[transcript]['fs']:
+                            output_strings.append('\t{}\t{}-base frameshift\n'.format(transcript, fs_dict[transcript]['frame change']))
                             # Intragenic will have two different 'confidence' reports
                             # assert len(fs_dict[gene][transcript]['confidence']) == 2, 'Wrong number of confidence values for intragenic dup: {}'.format(fs_dict[gene][transcript]['confidence'])
                             # Print both ends of the confidence statement
-                            if fs_dict[gene][transcript]['confidence'] == 2:
-                                output_strings.append("\t\t3' End{}\n".format(fs_dict[gene][transcript]['confidence'][0]))
-                                output_strings.append("\t\t5' End{}\n".format(fs_dict[gene][transcript]['confidence'][1]))
+                            if fs_dict[transcript]['confidence'] == 2:
+                                output_strings.append("\t\t3' End{}\n".format(fs_dict[transcript]['confidence'][0]))
+                                output_strings.append("\t\t5' End{}\n".format(fs_dict[transcript]['confidence'][1]))
                             else:
-                                for x in fs_dict[gene][transcript]['confidence']:
+                                for x in fs_dict[transcript]['confidence']:
                                     output_strings.append("\t\t{}\n".format(x))
                         else:
                             output_strings.append('\t{}\tIntragenic, no frameshift\n'.format(transcript))
                 # All other types of frameshift
                 else:
                     if (copies - 2) % 3 == 0:
-                        output_strings.append('\tTranscript: {} - {} CNV, no frameshift\n'.format(transcript, fs_dict[gene][transcript]['type']))
+                        output_strings.append('\tTranscript: {} - {} CNV, no frameshift\n'.format(transcript, fs_dict[transcript]['type']))
                     # Actual frameshifts
                     else:
                         output_strings.append('\t{}\t{}-base frameshift due to {} CNV\n'.format(transcript,
-                                                                                                fs_dict[gene][transcript]['frame change'],
-                                                                                                fs_dict[gene][transcript]['type']))
-                        if fs_dict[gene][transcript]['frame change'] == 0:
+                                                                                                fs_dict[transcript]['frame change'],
+                                                                                                fs_dict[transcript]['type']))
+                        if fs_dict[transcript]['frame change'] == 0:
                             print 'base change 0'
                             print
-                        output_strings.append("\t\t{}\n".format(fs_dict[gene][transcript]['confidence'][0]))
+                        output_strings.append("\t\t{}\n".format(fs_dict[transcript]['confidence'][0]))
             else:
                 output_strings.append('\t{}\tNo Frameshift\n'.format(transcript))
     return output_strings
@@ -214,31 +214,26 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
                              'stop': tranEnd,
                              'exon_num': exon_num,
                              'exon_list': range(1, exon_num + 1),
-                             'strand': strand,
-                                                          # Add details from the annotations dictionary
-                             'disease': ddg2p_dict[chromosome][gene]['diseases']}
-    may also have gene_dict['hi_score'] and ['hs_score'] if haploinsufficiency is present from DDD
+                             'strand': strand}
+    may also have gene_dict['hi_score'] and ['hs_score'] if HI is present from DDD
 
     :return:
     """
     # Specific method for calculating the number of bases affected by FS
-    out_dict = {gene: {}}
+    out_dict = {}
     for transcript in [transcript for transcript in gene_dict.keys()
                                    if transcript not in ['hi_score', 'hs_score']]:
         # Create a variable to determine if there is an overlap for this transcript
         # Not all transripts will be affected by a CNV due to varying lengths
         any_overlap = False
-        cnv_type = ''
         bases_affected = 0
         exon_list = gene_dict[transcript]['exon_list']
         gene_start = gene_dict[transcript]['txStart']
         gene_stop = gene_dict[transcript]['txEnd']
         exons_affected = []
         exonic_end = False
-        gap_found = False
         confidence = []
         last_end = gene_dict[transcript]['exons'][1]['stop']
-
 
         """
         # DEBUG for exon lengths
@@ -252,151 +247,180 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
             print 'Added_length: {}'.format((exon_stop - exon_start)-1)
             this = raw_input('Continue...')
         """
+        # 3' end of gene, exons overlapping start of CNV
+        if (gene_start < start < gene_stop) and stop > gene_stop:
 
-        if (gene_start < start) and (gene_stop > start and gene_stop < stop):
-            # 3' end, exons overlapping start
             cnv_type = "3'"
+
             # Situation; gene starts outside CNV boundary
+
             for exon in exon_list:
                 # Get details from the exon entry
                 exon_start = gene_dict[transcript]['exons'][exon]['start']
                 exon_stop = gene_dict[transcript]['exons'][exon]['stop']
-                # Record the end coordinate of the previous exon
-                # This will establish the region between adjacent exons for the FS calculation
-                
-                
-                # If the end point of the CNV is exonic, quit 
-                if start >= exon_start and start <= exon_stop:
+
+                # If the end point of the CNV is exonic, quit and move to next transcript
+                if exon_start <= start <= exon_stop:
+                    # Overlap between CNV and transcript
                     any_overlap = True
                     # End point is exonic, don't calculate
                     exonic_end = True
-                    out_dict[gene][transcript] = {'fail': 'CNV end point is exonic, Frameshift not calculated'}
+                    out_dict[transcript] = {'fail': 'CNV end point is exonic, Frameshift not calculated'}
                     break
-                elif start <= exon_start:
-                    any_overlap = True
+
+                # If the CNV starts before this exon, add values to running total
+                elif start < exon_start:
                     exons_affected.append(str(exon))
                     bases_affected += (exon_stop - exon_start)
 
-                    if not gap_found:
-                        gap_found = True
-                        # Do something to find probes in this region
-                        print 'Confidence values!:\nlast_end: {}\nexon_start: {}\nstart: {}\nstop: {}'.format(
-                            last_end, exon_start, start, stop
-                        )
-                        this = raw_input('continue...')
-                        confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, False)) 
-                else:
+                    # If this is the first exon oveerlapped by CNV, get confidence
+                    if not any_overlap:
+                        confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, False))
+                        any_overlap = True
+                    # Do not break, as all remaining exons are included in CNV
+
+                # If this exon is not overlapped by the CNV
+                elif start > exon_stop:
                     # Moves the 'end of last exon marker' along 
                     last_end = exon_stop
-            
-        elif (gene_start > start and gene_start < stop) and (gene_stop > stop):
-            # 5' end, exons overlapping stop
+
+        # 5' end of gene, exons overlapping CNV stop
+        elif start < gene_start and (gene_start < stop < gene_stop):
+
             cnv_type = "5'"
-            # Situation; gene will start within CNV region
+
+            # Situation: gene will start within CNV region
 
             for exon in exon_list:
+                # Get details from the exon entry
                 exon_start = gene_dict[transcript]['exons'][exon]['start']
                 exon_stop = gene_dict[transcript]['exons'][exon]['stop']
                 
                 # If the end point of the CNV is exonic, quit 
-                if stop >= exon_start and stop <= exon_stop:
+                if exon_start <= stop <= exon_stop:
+                    # Overlap between CNV and transcript
                     any_overlap = True
+
                     # End point is exonic, don't calculate
                     exonic_end = True
-                    out_dict[gene][transcript] = {'fail': 'CNV end point is exonic, FS not calculated'}
+                    out_dict[transcript] = {'fail': 'CNV end point is exonic, FS not calculated'}
+
+                    # Quit for this transcript
                     break
                 
                 elif stop >= exon_stop:
                     any_overlap = True
-                    exons_affected.append(str(exon))
+                    exons_affected.append(exon)
                     bases_affected += (exon_stop - exon_start)
                     last_end = exon_stop
-                    
-                else:
-                    if not gap_found:
-                        gap_found = True
-                        # find probes in this region
-                        print 'Confidence values!:\nlast_end: {}\nexon_start: {}\nstart: {}\nstop: {}'.format(
-                            last_end, exon_start, start, stop
-                        )
-                        this = raw_input('continue...')
-                        confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, True)) 
 
-        elif (gene_start > start) and (gene_stop < stop):
-            # intragenic - use both ends independently
+                # This exon is not within the CNV region
+                elif stop <= exon_start:
+                    # Get the confidence value using the boundaries of the intron
+                    confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, True))
+                    # Quit for this transcript
+                    break
+
+        # Intragenic CNV, both start and stop are intragenic
+        # Final condition is trivial really.. Checks data is accurate
+        elif (gene_start < start < gene_stop) and (gene_start < stop < gene_stop)\
+                and (start < stop):
             cnv_type = "intragenic"
+            print 'identified an intragenic CNV!'
             # Situation; starts outside CNV, enters CNV, ends outside CNV
             
             # Initialise Boolean values
             outside = True
             inside = False
-            
+
             for exon in exon_list:
+                # Get details from the exon entry
                 exon_start = gene_dict[transcript]['exons'][exon]['start']
                 exon_stop = gene_dict[transcript]['exons'][exon]['stop']
                 
                 # If the end point of the CNV is exonic, quit 
                 # Covers both start and stop
-                if (stop >= exon_start and stop <= exon_stop) or \
-                    (start >= exon_start and start <= exon_stop):
+                if (exon_start <= stop <= exon_stop) or \
+                    (exon_start <= start <= exon_stop):
+                    # Overlap between CNV and transcript
                     any_overlap = True
                     # End point is exonic, don't calculate
                     exonic_end = True
-                    out_dict[gene][transcript] = {'fail': 'CNV end point is exonic, FS not calculated'}
+                    out_dict[transcript] = {'fail': 'CNV end point is exonic, FS not calculated'}
                     break
-                    
-                elif outside:
+
+                # This is the starting status; not within the CNV region and not exonic
+                if outside:
+                    # If CNV starts after exon, move branch point up
                     if start > exon_stop:
                         last_end = exon_stop
+                        # Exon values not used, exon not affected
+                    # If the CNV begins before this exon
                     elif start < exon_start:
-                        any_overlap = True
+
+                        # No longer outside CNV region
                         outside = False
+                        # Now under the CNV
                         inside = True
-                        exons_affected.append(str(exon))
+
+                        exons_affected.append(exon)
                         bases_affected += (exon_stop - exon_start)
-                        # Do the calculation of probe confidence here
-                        print 'Confidence values!:\nlast_end: {}\nexon_start: {}\nstart: {}\nstop: {}'.format(
-                            last_end, exon_start, start, stop
-                        )
-                        this = raw_input('continue...')
-                        confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, False)) 
+
+                        if not any_overlap:
+                            # Do the calculation of probe confidence here
+                            confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, False))
+                            any_overlap = True
+
                         last_end = exon_stop
+
+                    # This condition shouldn't be reached, exonic ends already caught
                     else:
                         print "Shouldn't reach this condition!"
-                        this = raw_input
+                        this = raw_input()
+
+                # If the previous exon(s) were under CNV
                 elif inside:
+                    # If we are still under the CNV
                     if stop > exon_stop:
-                        any_overlap = True
-                        exons_affected.append(str(exon))
+                        exons_affected.append(exon)
                         bases_affected += (exon_stop - exon_start)
+
+                        # Move the boundary point along
                         last_end = exon_stop
+
+                    # Or if this exon is outside the CNV
                     elif stop < exon_start:
-                        inside = False
                         # Do the calculation of probe confidence here
-                        print 'Confidence values!:\nlast_end: {}\nexon_start: {}\nstart: {}\nstop: {}'.format(
-                            last_end, exon_start, start, stop
-                        )
-                        this = raw_input('continue...')
-                        confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, True))                      
+                        confidence.append(get_confidence(chrom, last_end, exon_start, start, stop, True))
+
+                        # Full span observed, can quit now
+                        break
+
+                    # This condition shouldn't be reached, exonic ends already caught
                     else:
                         print "Shouldn't reach this condition!"
-                        this = raw_input
+                        this = raw_input()
+                else:
+                    print "Shouldn't reach this condition either!"
+                    this = raw_input()
+
         if not any_overlap:
-            out_dict[gene][transcript] = {'fail': 'No overlap for this transcript'}
+            out_dict[transcript] = {'fail': 'No overlap for this transcript'}
         elif not exonic_end:
+            print 'bases_affected: {}'.format(bases_affected)
             modulo = bases_affected % 3
             if modulo != 0:
                 frameshift = True
             else:
                 frameshift = False
             
-            out_dict[gene][transcript] = {'type': cnv_type,
-                                          'exons aff': exons_affected,
-                                          'bases aff': bases_affected,
-                                          'frame change': bases_affected % 3,
-                                          'fs': frameshift,
-                                          'confidence': confidence,
-                                          }
+            out_dict[transcript] = {'type': cnv_type,
+                                    'exons aff': exons_affected,
+                                    'bases aff': bases_affected,
+                                    'frame change': bases_affected % 3,
+                                    'fs': frameshift,
+                                    'confidence': confidence,
+                                   }
     return out_dict
     
 def get_confidence(chrom, start, stop, cnv_start, cnv_stop, start_in):
@@ -489,6 +513,7 @@ df = pd.read_csv(probes, sep='\t', header=None, names=['chrom', 'start', 'stop']
 with open(cases, 'r') as handle:
     reader = csv.DictReader(handle)
     with open(fs_out, 'w') as outhandle:
+        outhandle.write('The frameshift analysis of the contents of file "{}"\n'.format(cases))
         for row in reader:
         
             # Select values from the results row
@@ -498,52 +523,52 @@ with open(cases, 'r') as handle:
             copy_num = int(row['Copy number'])
             cnv_type = row['Type']
             
-            # Progress indicator
+            # Progress indicator to STD. out
             print 'Sample: %s' % row['Sample']
             
             # Isolate the relevant part of the BED file based on the chromosome
             # These indexes are character values, not numbers (to account for chroms X & Y)
             dict_section = master_dict[chromosome]
             
-            # For each row, review all genes on the chromosome
+            # For each row, review all genes on that chromosome
             for gene in dict_section:
-            
-                # Each transcript is reviewed-
+
                 """
                 This method isn't particularly efficient;
-                    Scans through every gene and transcript first, to find if there are any overlaps
-                    Then repeats the process to find the specific genes which the CNV overlaps
+                - Scans through every gene and transcript first, to find if there are any overlaps
+                - Then repeats the process to find the specific genes which the CNV overlaps
                     
-                    This should be optimised, but works so quickly that it may not be worth refactoring
+                This should be optimised, but works so quickly that it may not be worth refactoring
                 """
                 check = False
                 intra = False
                 for transcript in [transcript for transcript in dict_section[gene].keys()
                                    if transcript not in ['hi_score', 'hs_score']]:
+
                     # Use the first and last bases of the whole gene region
                     # This method doesn't account for gene direction, and may need to be reworked
-
                     gene_start = dict_section[gene][transcript]['txStart']
                     gene_stop = dict_section[gene][transcript]['txEnd']
-                    
                     
                     # If there is partial overlap, add the gene list to the set (only one entry per transcript)
                     # 
                     #                   [---------------------EXON--------------------]
                     #           [---Clause 1---]
-                    #                                  [---Clause 2---]
-                    #                                                           [---Clause 3---]
+                    #                                  [---Clause 3---]
+                    #                                                           [---Clause 2---]
                     
-                    # first condition pair checks for partial overlaps
+                    # Check for partial overlaps
+                    # First condition is CNV overlapping 3' end of the gene (start outside, end inside)
+                    # Second is for CNV overlapping 5' end of the gene (stop outside, start inside)
+                    # Third checks for intragenic duplications
+                    # This is re-checked later, so this has been bundled
                     if (start <= gene_start and (stop >= gene_start and stop <= gene_stop)) \
-                        or ((start >= gene_start and start <= gene_stop) and stop >= gene_stop):
-                        # If a gene is found, add the details of the CSV, gene, and sample to the master set
+                        or ((start >= gene_start and start <= gene_stop) and stop >= gene_stop)\
+                            or (start >= gene_start and stop < gene_stop):
                         check = True
-                    # second block checks for an intragenic duplication, handled separately
-                    # Isn't this re-checked later?
-                    elif (start >= gene_start and start <= gene_stop) and (stop >= gene_start and stop < gene_stop):
-                        check = True
-                        intra = True
+                        # Break from transcript for-loop
+                        # Transcripts are re-investigated later
+                        break
                         
                 if check:
                     output_strings = work_out_frameshift(chromosome, start, stop, dict_section[gene], copy_num, gene)
@@ -551,5 +576,3 @@ with open(cases, 'r') as handle:
                     outhandle.write('\nCNV: {}:{}-{}\n'.format(chromosome, start, stop))
                     for line in output_strings:
                         outhandle.write(line)
-                  
-

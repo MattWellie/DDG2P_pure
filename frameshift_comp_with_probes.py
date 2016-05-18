@@ -326,7 +326,14 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
         elif (gene_start < start < gene_stop) and (gene_start < stop < gene_stop)\
                 and (start < stop):
             cnv_type = "intragenic"
-            print 'identified an intragenic CNV!'
+            """
+            This line will print to STD.out to indicate an intragenic has been found
+            Unnecessary during routine usage
+            Will also print this for each different transcript, so this clutters up the terminal
+            """
+            #print 'identified an intragenic CNV!'
+
+
             # Situation; starts outside CNV, enters CNV, ends outside CNV
             
             # Initialise Boolean values
@@ -407,7 +414,12 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
         if not any_overlap:
             out_dict[transcript] = {'fail': 'No overlap for this transcript'}
         elif not exonic_end:
-            print 'bases_affected: {}'.format(bases_affected)
+            """
+            Also prints to STD.out, waste of space during routine use
+            This may be useful for testing/debugging
+            """
+            #print 'bases_affected: {}'.format(bases_affected)
+
             modulo = bases_affected % 3
             if modulo != 0:
                 frameshift = True

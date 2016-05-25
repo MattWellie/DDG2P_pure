@@ -1,5 +1,5 @@
- DDG2P_pure
- ==========
+ ## DDG2P_pure
+ 
  
 A program to interpret genetic duplications (CNV) with reference to a set of array probes to identify likely frameshifts. This is done to add an additional component to the interpretation of duplications, as a duplication leading to a frameshift or degraded transcript could be interpreted as a loss of a funtional allele
 

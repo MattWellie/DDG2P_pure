@@ -12,5 +12,5 @@ To run this analysis, the tool uses several key components:
 
 The software requirements for this program are defined in req.txt, and were exported from the conda virtual environment the application was developed in.
 
-The program requires a CSV file containing CNV details, a pickle file with all genes of interest (DDG2P in this case) and a BED file containing probe sites. These are currently specified around line 509 of `framshift_comp_with_probes.py`, though this will be changed to argparse in a future release.
+The program requires a CSV file containing CNV details, a pickle file with all genes of interest (DDG2P in this case) and a BED file containing probe sites. These are currently specified around line 509 of `frameshift_comp_with_probes.py`, though this will be changed to argparse in a future release.
 

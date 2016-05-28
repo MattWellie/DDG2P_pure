@@ -28,6 +28,15 @@ This is also intended to generalise the process, as the BED file from the array 
 import csv, os, cPickle
 import numpy as np
 import pandas as pd
+import argparse
+
+
+arg_parser = argparse.ArgumentParser(description='Specify the files to look at')
+arg_parser.add_argument('--cases', dest='cases', action='store_false', default='fake_results.csv')
+arg_parser.add_argument('--probes', dest='probes', action='store', default='DDG2P_Probes.bed')
+arg_parser.add_argument('--genes', dest='genes', action='store', default='ddg2p_with_exons.cpickle')
+arg_parser.add_argument('--outfile', dest='fs_out', action='store', default='frameshift_analysis.txt')
+args=arg_parser.parse_args()
 
 def work_out_frameshift(chrom, start, stop, gene_dict, copy_num, gene):
     """ 
@@ -504,28 +513,21 @@ def get_confidence(chrom, start, stop, cnv_start, cnv_stop, start_in):
             return 'Multiple intronic probes, but all are outside CNV'
         else:
             return 'Big fat error has occurred'
-            
-    
-# Establish file names
-cases = 'fake_results.csv'
-genes = 'ddg2p_with_exons.cpickle'
-probes = 'DDG2P_probes.bed'
-summary_out = 'Partial_Duplications.txt'
-fs_out = 'frame_shift_summary.txt'
+
 
 # Import the gene locations 
-with open(genes, 'r') as handle:
+with open(args.genes, 'r') as handle:
     master_dict = cPickle.load(handle)
     
 # Import the probe sites
 # This uses the Pandas read_csv module, choosing the first 3 columns of the file and providing them with the names shown
-df = pd.read_csv(probes, sep='\t', header=None, names=['chrom', 'start', 'stop'], usecols=[0,1,2])
+df = pd.read_csv(args.probes, sep='\t', header=None, names=['chrom', 'start', 'stop'], usecols=[0,1,2])
 
 # Go through the CNVs, one by one
-with open(cases, 'r') as handle:
+with open(args.cases, 'r') as handle:
     reader = csv.DictReader(handle)
-    with open(fs_out, 'w') as outhandle:
-        outhandle.write('The frameshift analysis of the contents of file "{}"\n'.format(cases))
+    with open(args.fs_out, 'w') as outhandle:
+        outhandle.write('The frameshift analysis of the contents of file "{}"\n'.format(args.cases))
         for row in reader:
         
             # Select values from the results row

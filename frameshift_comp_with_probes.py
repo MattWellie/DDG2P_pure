@@ -26,8 +26,6 @@ This is also intended to generalise the process, as the BED file from the array 
 """
 
 import csv, os, cPickle
-import numpy as np
-import pandas as pd
 import argparse
 
 
@@ -427,7 +425,6 @@ def calculate_exon_shift(chrom, start, stop, gene_dict, gene):
             Also prints to STD.out, waste of space during routine use
             This may be useful for testing/debugging
             """
-            #print 'bases_affected: {}'.format(bases_affected)
 
             modulo = bases_affected % 3
             if modulo != 0:
@@ -453,14 +450,12 @@ def get_confidence(chrom, start, stop, cnv_start, cnv_stop, start_in):
     A message about the confidence will be returned.
     """
     
-    # Use the chromosome number to select an appropriate region of the probe dataframe
-    chromosome_of_interest = 'chr{}'.format(chrom)
-    chrom_in_roi = df[df['chrom'] == chromosome_of_interest]
+    # Use the chromosome number to select an appropriate region of the probe set
+    chrom_in_roi = probe_dict[chrom]
     
     # Probes selected by span of bases on that c'some
-    probes_in_roi = chrom_in_roi[chrom_in_roi['start'] >= start]
-    probes_in_roi = probes_in_roi[probes_in_roi['stop'] <= stop]
-    # Can this be done as a one step assignment?
+    probes_in_roi = [probe for probe in chrom_in_roi if probe['start'] >= start and probe['stop'] <= stop]
+    #probes_in_roi = probes_in_roi[probes_in_roi['stop'] <= stop]
     
     if len(probes_in_roi) == 0:
         return 'No probes in this intronic region'
@@ -470,15 +465,12 @@ def get_confidence(chrom, start, stop, cnv_start, cnv_stop, start_in):
         # Do the calculations
         inside = 0
         outside = 0
-        
-        # Bear in mind that the probes will be used to determine the calls;
-        # CNV should never split a probe site, makes no sense
-        
+
         # Sort values
-        probes_in_roi.sort_values('start')
+        probes_in_roi = sorted(probes_in_roi, key=lambda  k: k['start'])
         
         # Take each probe in turn
-        for index, probe in probes_in_roi.iterrows():
+        for probe in probes_in_roi:
             if probe['stop'] < cnv_stop:
                 inside += 1
             elif probe['start'] > cnv_stop:
@@ -495,12 +487,12 @@ def get_confidence(chrom, start, stop, cnv_start, cnv_stop, start_in):
         # Do the calculations, assuming the start of the region is not in CNV
         inside = 0
         outside = 0
-        
+
         # Sort values
-        probes_in_roi.sort_values('start')
+        probes_in_roi = sorted(probes_in_roi, key=lambda  k: k['start'])
         
         # Take each probe in turn
-        for index, probe in probes_in_roi.iterrows():
+        for probe in probes_in_roi:
             if probe['stop'] < cnv_start:
                 outside += 1
             elif probe['start'] > cnv_start:
@@ -514,14 +506,27 @@ def get_confidence(chrom, start, stop, cnv_start, cnv_stop, start_in):
         else:
             return 'Big fat error has occurred'
 
-
 # Import the gene locations 
 with open(args.genes, 'r') as handle:
     master_dict = cPickle.load(handle)
     
-# Import the probe sites
-# This uses the Pandas read_csv module, choosing the first 3 columns of the file and providing them with the names shown
-df = pd.read_csv(args.probes, sep='\t', header=None, names=['chrom', 'start', 'stop'], usecols=[0,1,2])
+'''
+Import the probe sites
+This was originally done using pandas, but installation of pandas and numpy was restricted on trust computers
+This is now done using a regular CSV parse, storing the contents in a dictionary
+chromosome number: [ List of probes on that chromosome, with each probe as a dictionary {'start': x, 'stop': y}]
+This should retain the original sorting, but will be explicitly sorted later to be sure
+'''
+
+probe_dict = {}
+with open(args.probes, 'r') as handle:
+    for row in handle:
+        row_list = row.rstrip().split('\t')
+        chr = row_list[0][3:]
+        if chr in probe_dict:
+            probe_dict[chr].append({'start': int(row_list[1]), 'stop': int(row_list[2])})
+        else:
+            probe_dict[chr] = [{'start': int(row_list[1]), 'stop': int(row_list[2])}]
 
 # Go through the CNVs, one by one
 with open(args.cases, 'r') as handle:

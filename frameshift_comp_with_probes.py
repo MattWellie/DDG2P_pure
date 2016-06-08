@@ -595,3 +595,5 @@ with open(args.cases, 'r') as handle:
                     outhandle.write('\nCNV: {}:{}-{}\n'.format(chromosome, start, stop))
                     for line in output_strings:
                         outhandle.write(line)
+                else:
+                    outhandle.write('\nNo partial duplications detected for sample number: %s\n' % row['Sample'])

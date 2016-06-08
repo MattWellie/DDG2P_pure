@@ -30,7 +30,7 @@ import argparse
 
 
 arg_parser = argparse.ArgumentParser(description='Specify the files to look at')
-arg_parser.add_argument('--cases', dest='cases', action='store_false', default='fake_results.csv')
+arg_parser.add_argument('--cases', dest='cases', action='store', default='fake_results.csv')
 arg_parser.add_argument('--probes', dest='probes', action='store', default='DDG2P_Probes.bed')
 arg_parser.add_argument('--genes', dest='genes', action='store', default='ddg2p_with_exons.cpickle')
 arg_parser.add_argument('--outfile', dest='fs_out', action='store', default='frameshift_analysis.txt')

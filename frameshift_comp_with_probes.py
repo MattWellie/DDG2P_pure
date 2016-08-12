@@ -549,6 +549,7 @@ with open(args.cases, 'r') as handle:
             # These indexes are character values, not numbers (to account for chroms X & Y)
             dict_section = master_dict[chromosome]
             
+			      any_cnv_gene_overlap = False
             # For each row, review all genes on that chromosome
             for gene in dict_section:
 
@@ -560,7 +561,6 @@ with open(args.cases, 'r') as handle:
                 This should be optimised, but works so quickly that it may not be worth refactoring
                 """
                 check = False
-                intra = False
                 for transcript in [transcript for transcript in dict_section[gene].keys()
                                    if transcript not in ['hi_score', 'hs_score']]:
 
@@ -585,6 +585,7 @@ with open(args.cases, 'r') as handle:
                         or ((start >= gene_start and start <= gene_stop) and stop >= gene_stop)\
                             or (start >= gene_start and stop < gene_stop):
                         check = True
+						            any_cnv_gene_overlap = True
                         # Break from transcript for-loop
                         # Transcripts are re-investigated later
                         break
@@ -592,8 +593,10 @@ with open(args.cases, 'r') as handle:
                 if check:
                     output_strings = work_out_frameshift(chromosome, start, stop, dict_section[gene], copy_num, gene)
                     outhandle.write('\nSample number: %s\n' % row['Sample'])
+					          outhandle.write('Checking CNV against gene: {}'.format(gene))
                     outhandle.write('\nCNV: {}:{}-{}\n'.format(chromosome, start, stop))
                     for line in output_strings:
                         outhandle.write(line)
-                else:
-                    outhandle.write('\nNo partial duplications detected for sample number: %s\n' % row['Sample'])
+						
+			if not any_cnv_gene_overlap:
+				  outhandle.write('\nNo CNVs in sample number {} overlap with DDG2P genes'.format(row['Sample']))

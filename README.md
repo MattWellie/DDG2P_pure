@@ -14,3 +14,4 @@ The software requirements for this program are defined in req.txt, and were expo
 
 The program requires a CSV file containing CNV details, a pickle file with all genes of interest (DDG2P in this case) and a BED file containing probe sites. These are currently specified around line 509 of `frameshift_comp_with_probes.py`, though this will be changed to argparse in a future release.
 
+This repository also contains a tool for manually masking regions of a reference genome (FastA). This will be shifted into its own repository soon
